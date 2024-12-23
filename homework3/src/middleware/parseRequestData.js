@@ -12,6 +12,7 @@ const parseRequestData = async (req, res, next) => {
         datetime: new Intl.DateTimeFormat('uk-UA', {
             dateStyle: 'short',
             timeStyle: 'medium',
+            timeZone: 'Europe/Kiev', // Указание часового пояса Киева
         }).format(new Date()),
         timezone: geo.timezone,
         url: `${req.protocol}://${req.get('host')}${req.originalUrl}`,
