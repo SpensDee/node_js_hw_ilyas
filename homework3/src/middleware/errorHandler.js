@@ -2,7 +2,6 @@ import { errorLogStream } from '../streams.js'; // Подключаем пото
 import logger from '../utils/logger.js'; // Кастомный логгер (опционально)
 
 const errorHandler = (err, req, res, next) => {
-    // Формируем сообщение об ошибке
     const logMessage = JSON.stringify({
         timestamp: new Date().toISOString(),
         method: req.method,
@@ -11,17 +10,14 @@ const errorHandler = (err, req, res, next) => {
         stack: err.stack,
     }) + '\n';
 
-    // Логируем в консоль (опционально)
     logger.error(err.stack, `[${req.method}] ${req.url} - Error: ${err.message}`);
 
-    // Записываем ошибку в файл
     errorLogStream.write(logMessage, (streamErr) => {
         if (streamErr) {
             console.error('Error writing to errors.log:', streamErr.message);
         }
     });
 
-    // Отправляем ответ клиенту
     res.status(err.status || 500).json({
         success: false,
         message: err.message || 'Internal Server Error',
