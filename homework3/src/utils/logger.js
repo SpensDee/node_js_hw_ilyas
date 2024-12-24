@@ -25,7 +25,7 @@ const logger = {
 
     success(message, prefix = 'SUCCESS') {
         console.log(
-            style(prefix, { bgColor: "Green" }),
+            style(prefix, { bgColor: "Green", color: "White" }),
             style(message, { color: "Green" })
         );
     }
